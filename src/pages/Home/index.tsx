@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import {
   Card,
   Container,
@@ -12,7 +12,7 @@ import arrow from '../../assets/icons/arrow.svg';
 import edit from '../../assets/icons/edit.svg';
 import trash from '../../assets/icons/delete.svg';
 
-function index() {
+function Home() {
   return (
     <Container>
       <InputSearchContainer>
@@ -21,7 +21,7 @@ function index() {
 
       <Header>
         <strong>3 Contatos</strong>
-        <a href="/">Novo Contato</a>
+        <Link to="/new">Novo Contato</Link>
       </Header>
 
       <ListContainer>
@@ -57,4 +57,4 @@ function index() {
   );
 }
 
-export default index;
+export default Home;
