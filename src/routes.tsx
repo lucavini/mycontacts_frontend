@@ -8,7 +8,7 @@ import EditContact from './pages/EditContact';
 function routes() {
   return (
     <Switch>
-      <Route path="/" exact component={Home} />
+      <Route exact path="/" component={Home} />
       <Route path="/new" component={NewContact} />
       <Route path="/edit/:id" component={EditContact} />
     </Switch>
