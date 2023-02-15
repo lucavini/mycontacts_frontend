@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './styles';
 import Logo from '../../assets/images/logo.svg';
 
-function index() {
+function Header() {
   return (
     <Container>
       <img src={Logo} alt="logo" width="201" />
@@ -10,4 +10,4 @@ function index() {
   );
 }
 
-export default index;
+export default Header;
