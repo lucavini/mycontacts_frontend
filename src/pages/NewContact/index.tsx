@@ -2,6 +2,7 @@ import React from 'react';
 import PageHeader from '../../Components/PageHeader';
 import Input from '../../Components/Input';
 import Select from '../../Components/Select';
+import Button from '../../Components/Button';
 
 function NewContact() {
   return (
@@ -15,6 +16,8 @@ function NewContact() {
         <option value="123">Linkedin</option>
         <option value="123">Facebook</option>
       </Select>
+
+      <Button type="button">Salvar Alterações</Button>
     </>
   );
 }
