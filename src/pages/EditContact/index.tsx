@@ -1,7 +1,8 @@
 import React from 'react';
+import PageHeader from '../../Components/PageHeader';
 
 function EditContact() {
-  return <div>EditContact</div>;
+  return <PageHeader title="Editar Contato" />;
 }
 
 export default EditContact;
