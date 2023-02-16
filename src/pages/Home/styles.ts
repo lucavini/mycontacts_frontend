@@ -13,7 +13,7 @@ export const InputSearchContainer = styled.div`
     height: 50px;
     background: #fff;
     border: none;
-    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.04));
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
     padding: 0px 16px;
 
     &:focus {

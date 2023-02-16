@@ -11,10 +11,13 @@ import {
 import arrow from '../../assets/icons/arrow.svg';
 import edit from '../../assets/icons/edit.svg';
 import trash from '../../assets/icons/delete.svg';
+import Modal from '../../Components/Modal';
 
 function Home() {
   return (
     <Container>
+      <Modal />
+
       <InputSearchContainer>
         <input type="text" placeholder="Pesquisar contato" />
       </InputSearchContainer>
