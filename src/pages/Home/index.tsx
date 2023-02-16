@@ -44,12 +44,12 @@ function Home() {
           </div>
 
           <div className="action">
-            <a href="/">
+            <Link to="/edit/123">
               <img src={edit} alt="edit" />
-            </a>
-            <a href="/">
+            </Link>
+            <Link to="/">
               <img src={trash} alt="trash" />
-            </a>
+            </Link>
           </div>
         </Card>
       </ListContainer>
