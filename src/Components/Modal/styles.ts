@@ -13,7 +13,11 @@ export const Overlay = styled.div`
   justify-content: center;
 `;
 
-export const Container = styled.div`
+type Props = {
+  danger?: boolean;
+};
+
+export const Container = styled.div<Props>`
   max-width: 450px;
   width: 100%;
   background: #fff;
@@ -23,6 +27,7 @@ export const Container = styled.div`
 
   h1 {
     font-size: 22px;
+    color: ${({ theme, danger }) => (danger ? theme.colors.danger.main : theme.colors.gray[900])};
   }
 
   p {

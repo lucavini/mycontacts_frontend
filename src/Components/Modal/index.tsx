@@ -3,10 +3,14 @@ import { Overlay, Container, Footer } from './styles';
 
 import Button from '../Button';
 
-function Modal() {
+type Props = {
+  danger?: boolean;
+};
+
+function Modal({ danger = false }: Props) {
   return (
     <Overlay>
-      <Container>
+      <Container danger={danger}>
         <h1>Titulo do modal</h1>
         <p>Corpo do modal</p>
 
@@ -15,7 +19,9 @@ function Modal() {
             Cancelar
           </button>
 
-          <Button type="button">Deletar</Button>
+          <Button danger={danger} type="button">
+            Deletar
+          </Button>
         </Footer>
       </Container>
     </Overlay>
