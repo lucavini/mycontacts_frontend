@@ -7,6 +7,8 @@ import Select from '../Select';
 import Button from '../Button';
 
 import isEmailValid from '../../utils/isEmailValid';
+import formatPhone from '../../utils/formatPhone';
+import onlyDigits from '../../utils/onlyDigits';
 import useErrors from '../../hooks/useErrors';
 
 import { Form, ButtonContainer } from './styles';
@@ -45,12 +47,23 @@ function ContactForm({ buttonLabel }: Props) {
     }
   }
 
+  function handlePhoneChange({ target }: React.ChangeEvent<HTMLInputElement>) {
+    setPhone(formatPhone(target.value));
+  }
+
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    console.log({
+      name,
+      email,
+      phone: onlyDigits(phone),
+      category,
+    });
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={gerErrorMessageByFieldName('name')}>
         <Input
           placeholder="Nome"
@@ -62,6 +75,7 @@ function ContactForm({ buttonLabel }: Props) {
 
       <FormGroup error={gerErrorMessageByFieldName('email')}>
         <Input
+          type="email"
           placeholder="Email"
           value={email}
           onChange={handleEmailChange}
@@ -73,7 +87,8 @@ function ContactForm({ buttonLabel }: Props) {
         <Input
           placeholder="Telefone"
           value={phone}
-          onChange={({ target }) => setPhone(target.value)}
+          onChange={handlePhoneChange}
+          maxLength={15}
         />
       </FormGroup>
 
