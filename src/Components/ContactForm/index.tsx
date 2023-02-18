@@ -1,32 +1,90 @@
+/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
-import { Form, ButtonContainer } from './styles';
+
 import FormGroup from '../FormGroup';
 import Input from '../Input';
 import Select from '../Select';
 import Button from '../Button';
+
+import isEmailValid from '../../utils/isEmailValid';
+import useErrors from '../../hooks/useErrors';
+
+import { Form, ButtonContainer } from './styles';
 
 type Props = {
   buttonLabel: string;
 };
 
 function ContactForm({ buttonLabel }: Props) {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [category, setCategory] = React.useState('');
+
+  const { setError, removeError, gerErrorMessageByFieldName } = useErrors<
+    'name' | 'email' | 'phone'
+  >();
+
+  function handleNameChange({ target }: React.ChangeEvent<HTMLInputElement>) {
+    setName(target.value);
+
+    if (!target.value) {
+      setError({ field: 'name', message: 'Nome é obrigatório.' });
+    } else {
+      removeError('email');
+    }
+  }
+
+  function handleEmailChange({ target }: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(target.value);
+
+    if (target.value && !isEmailValid(target.value)) {
+      setError({ field: 'email', message: 'E-mail inválido' });
+    } else {
+      removeError('email');
+    }
+  }
+
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+  }
+
   return (
-    <Form>
-      <FormGroup>
-        <Input placeholder="Nome" />
+    <Form onSubmit={handleSubmit}>
+      <FormGroup error={gerErrorMessageByFieldName('name')}>
+        <Input
+          placeholder="Nome"
+          value={name}
+          onChange={handleNameChange}
+          error={!!gerErrorMessageByFieldName('name')}
+        />
+      </FormGroup>
+
+      <FormGroup error={gerErrorMessageByFieldName('email')}>
+        <Input
+          placeholder="Email"
+          value={email}
+          onChange={handleEmailChange}
+          error={!!gerErrorMessageByFieldName('email')}
+        />
       </FormGroup>
 
       <FormGroup>
-        <Input placeholder="Email" />
+        <Input
+          placeholder="Telefone"
+          value={phone}
+          onChange={({ target }) => setPhone(target.value)}
+        />
       </FormGroup>
 
       <FormGroup>
-        <Input placeholder="Telefone" />
-      </FormGroup>
-
-      <FormGroup>
-        <Select>
-          <option value="Instagram">Instagram</option>
+        <Select
+          value={category}
+          onChange={({ target }) => setCategory(target.value)}
+        >
+          <option value="">Categoria</option>
+          <option value="instagram">Instagram</option>
+          <option value="discord">Discord</option>
         </Select>
       </FormGroup>
 
