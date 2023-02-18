@@ -108,13 +108,11 @@ export const Card = styled.div`
     }
   }
 
-  .actions {
+  .action {
     display: flex;
     align-items: center;
 
-    button {
-      background: transparent;
-      border: none;
+    a {
       margin-left: 8px;
     }
   }
