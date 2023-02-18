@@ -20,6 +20,7 @@
     "react/require-default-props": "off",
     "react/jsx-no-bind": "off",
     "function-paren-newline": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off"
   }
 }

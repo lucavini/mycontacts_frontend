@@ -23,9 +23,10 @@ function ContactForm({ buttonLabel }: Props) {
   const [phone, setPhone] = React.useState('');
   const [category, setCategory] = React.useState('');
 
-  const { setError, removeError, gerErrorMessageByFieldName } = useErrors<
-    'name' | 'email' | 'phone'
-  >();
+  const { errors, setError, removeError, gerErrorMessageByFieldName } =
+    useErrors<'name' | 'email' | 'phone'>();
+
+  const isFormValid = name && errors.length === 0;
 
   function handleNameChange({ target }: React.ChangeEvent<HTMLInputElement>) {
     setName(target.value);
@@ -66,7 +67,7 @@ function ContactForm({ buttonLabel }: Props) {
     <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={gerErrorMessageByFieldName('name')}>
         <Input
-          placeholder="Nome"
+          placeholder="Nome *"
           value={name}
           onChange={handleNameChange}
           error={!!gerErrorMessageByFieldName('name')}
@@ -104,7 +105,9 @@ function ContactForm({ buttonLabel }: Props) {
       </FormGroup>
 
       <ButtonContainer>
-        <Button type="submit">{buttonLabel}</Button>
+        <Button type="submit" disabled={!isFormValid}>
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </Form>
   );
