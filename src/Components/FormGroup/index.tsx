@@ -3,10 +3,16 @@ import { Container } from './styles';
 
 type Props = {
   children: React.ReactNode;
+  error?: string;
 };
 
-function FormGroup({ children }: Props) {
-  return <Container>{children}</Container>;
+function FormGroup({ children, error = '' }: Props) {
+  return (
+    <Container>
+      {children}
+      {error && <small>{error}</small>}
+    </Container>
+  );
 }
 
 export default FormGroup;
