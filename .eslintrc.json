@@ -17,6 +17,9 @@
     ],
     "import/prefer-default-export": "off",
     "object-curly-newline": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "react/jsx-no-bind": "off",
+    "function-paren-newline": "off",
+    "implicit-arrow-linebreak": "off"
   }
 }
