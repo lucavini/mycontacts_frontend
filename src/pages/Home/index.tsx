@@ -14,7 +14,7 @@ import edit from '../../assets/icons/edit.svg';
 import trash from '../../assets/icons/delete.svg';
 
 function Home() {
-  const { contacts, handleToggleOrderBy } = controller();
+  const { contacts, orderBy, handleToggleOrderBy } = controller();
 
   return (
     <Container>
@@ -30,7 +30,7 @@ function Home() {
         <Link to="/new">Novo Contato</Link>
       </Header>
 
-      <ListHeader>
+      <ListHeader orderBy={orderBy}>
         <button type="button" onClick={handleToggleOrderBy}>
           <span>Nome</span>
           <img src={arrow} alt="arrow" />

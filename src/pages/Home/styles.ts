@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   margin-top: 32px;
@@ -53,7 +53,11 @@ export const Header = styled.header`
   }
 `;
 
-export const ListHeader = styled.header`
+type Props = {
+  orderBy: string;
+};
+
+export const ListHeader = styled.header<Props>`
   margin-top: 24px;
 
   margin-bottom: 8px;
@@ -67,6 +71,13 @@ export const ListHeader = styled.header`
       margin-right: 8px;
       font-weight: bold;
       color: ${({ theme }) => theme.colors.primary.main};
+    }
+
+    img {
+      transition: 0.2s ease-in-out;
+      ${({ orderBy }) => css`
+        transform: ${orderBy === 'desc' ? 'rotate(180deg)' : 'rotate(0deg)'};
+      `}
     }
   }
 `;
