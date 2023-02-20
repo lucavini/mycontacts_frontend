@@ -8,7 +8,6 @@ import Button from '../Button';
 
 import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
-import onlyDigits from '../../utils/onlyDigits';
 import useErrors from '../../hooks/useErrors';
 
 import { Form, ButtonContainer } from './styles';
@@ -54,13 +53,6 @@ function ContactForm({ buttonLabel }: Props) {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-
-    console.log({
-      name,
-      email,
-      phone: onlyDigits(phone),
-      category,
-    });
   }
 
   return (

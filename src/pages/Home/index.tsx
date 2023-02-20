@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { controller } from './controller';
 import {
   Card,
   Container,
   Header,
-  ListContainer,
+  ListHeader,
   InputSearchContainer,
 } from './styles';
 
@@ -13,39 +14,43 @@ import edit from '../../assets/icons/edit.svg';
 import trash from '../../assets/icons/delete.svg';
 
 function Home() {
+  const { contacts, handleToggleOrderBy } = controller();
+
   return (
     <Container>
-
       <InputSearchContainer>
         <input type="text" placeholder="Pesquisar contato" />
       </InputSearchContainer>
 
       <Header>
-        <strong>3 Contatos</strong>
+        <strong>
+          {contacts.length}
+          {contacts.length === 1 ? ' Contato' : ' Contatos'}
+        </strong>
         <Link to="/new">Novo Contato</Link>
       </Header>
 
-      <ListContainer>
-        <header>
-          <button type="button">
-            <span>Nome</span>
-            <img src={arrow} alt="arrow" />
-          </button>
-        </header>
+      <ListHeader>
+        <button type="button" onClick={handleToggleOrderBy}>
+          <span>Nome</span>
+          <img src={arrow} alt="arrow" />
+        </button>
+      </ListHeader>
 
-        <Card>
+      {contacts.map((contact) => (
+        <Card key={contact.id}>
           <div className="info">
             <div className="contact-name">
-              <strong>Lucas Santos</strong>
-              <small>intagram</small>
+              <strong>{contact.name}</strong>
+              {contact.category_name && <small>{contact.category_name}</small>}
             </div>
 
-            <span>lucas@gmail.com</span>
-            <span>(89) 9999-9999</span>
+            <span>{contact.email}</span>
+            <span>{contact.phone}</span>
           </div>
 
           <div className="action">
-            <Link to="/edit/123">
+            <Link to={`/edit/${contact.id}`}>
               <img src={edit} alt="edit" />
             </Link>
             <Link to="/">
@@ -53,7 +58,7 @@ function Home() {
             </Link>
           </div>
         </Card>
-      </ListContainer>
+      ))}
     </Container>
   );
 }
