@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import delay from '../../utils/delay';
 
 interface Contact {
@@ -29,21 +29,26 @@ export function controller(): Controller {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
 
-  React.useEffect(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:3333/contacts?orderBy=${orderBy}`)
-      .then(async (response) => {
-        await delay(500);
+  useEffect(() => {
+    async function loadContact() {
+      setIsLoading(true);
 
+      try {
+        const response = await fetch(
+          `http://localhost:3333/contacts?orderBy=${orderBy}`,
+        );
+
+        await delay(500);
         const data = await response.json();
         setContacts(data);
-      })
-      .catch((error) => {
-        console.log('error: ', error);
-      })
-      .finally(() => {
+      } catch (error) {
+        console.log('Error: ', error);
+      } finally {
         setIsLoading(false);
-      });
+      }
+    }
+
+    loadContact();
   }, [orderBy]);
 
   function handleToggleOrderBy() {
