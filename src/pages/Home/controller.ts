@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import delay from '../../utils/delay';
+import ContactService from '../../Services/ContactService';
 
 interface Contact {
   category_id: string;
@@ -25,22 +25,21 @@ export function controller(): Controller {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const filteredContacts = React.useMemo(() => contacts.filter((contact) => (
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )), [contacts, searchTerm]);
+  const filteredContacts = React.useMemo(
+    () =>
+      contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    [contacts, searchTerm],
+  );
 
   useEffect(() => {
     async function loadContact() {
       setIsLoading(true);
 
       try {
-        const response = await fetch(
-          `http://localhost:3333/contacts?orderBy=${orderBy}`,
-        );
-
-        await delay(500);
-        const data = await response.json();
-        setContacts(data);
+        const contactsList = await ContactService.listContacts(orderBy);
+        setContacts(contactsList);
       } catch (error) {
         console.log('Error: ', error);
       } finally {
