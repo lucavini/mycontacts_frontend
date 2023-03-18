@@ -9,6 +9,8 @@ import {
   InputSearchContainer,
 } from './styles';
 
+import Loader from '../../Components/Loader';
+
 import arrow from '../../assets/icons/arrow.svg';
 import edit from '../../assets/icons/edit.svg';
 import trash from '../../assets/icons/delete.svg';
@@ -18,12 +20,14 @@ function Home() {
     orderBy,
     searchTerm,
     filteredContacts,
+    isLoading,
     handleToggleOrderBy,
     handleChangeSearchTerm,
   } = controller();
 
   return (
     <Container>
+      <Loader isLoading={isLoading} />
       <InputSearchContainer>
         <input
           type="text"
