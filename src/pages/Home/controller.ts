@@ -41,7 +41,7 @@ export function controller(): Controller {
         const contactsList = await ContactService.listContacts(orderBy);
         setContacts(contactsList);
       } catch (error) {
-        console.log('Error: ', error);
+        console.log('caiu no catch: ', error);
       } finally {
         setIsLoading(false);
       }
