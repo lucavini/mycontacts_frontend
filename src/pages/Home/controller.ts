@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import ContactService from '../../Services/ContactService';
-import APIError from '../../Shared/Errors/APIError';
 
 interface Contact {
   category_id: string;
@@ -16,7 +15,9 @@ export interface Controller {
   orderBy: string;
   searchTerm: string;
   isLoading: boolean;
+  hasError: boolean;
   handleToggleOrderBy: () => void;
+  handleTryAgain: () => void;
   handleChangeSearchTerm: (value: string) => void;
 }
 
@@ -25,6 +26,7 @@ export function controller(): Controller {
   const [orderBy, setOrderBy] = React.useState('asc');
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
+  const [hasError, setHasError] = React.useState(false);
 
   const filteredContacts = React.useMemo(
     () =>
@@ -34,25 +36,21 @@ export function controller(): Controller {
     [contacts, searchTerm],
   );
 
-  useEffect(() => {
-    async function loadContact() {
-      setIsLoading(true);
+  async function loadContact() {
+    setIsLoading(true);
 
-      try {
-        const contactsList = await ContactService.listContacts(orderBy);
-        setContacts(contactsList);
-      } catch (error) {
-        if (error instanceof APIError) {
-          console.log('Name: ', error.name);
-          console.log('Message: ', error.message);
-          console.log('Response: ', error.response);
-          console.log('Body: ', error.body);
-        }
-      } finally {
-        setIsLoading(false);
-      }
+    try {
+      const contactsList = await ContactService.listContacts(orderBy);
+      setHasError(false);
+      setContacts(contactsList);
+    } catch (error) {
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
     }
+  }
 
+  useEffect(() => {
     loadContact();
   }, [orderBy]);
 
@@ -64,11 +62,17 @@ export function controller(): Controller {
     setSearchTerm(value);
   }
 
+  function handleTryAgain() {
+    loadContact();
+  }
+
   return {
     orderBy,
     searchTerm,
     isLoading,
     filteredContacts,
+    hasError,
+    handleTryAgain,
     handleToggleOrderBy,
     handleChangeSearchTerm,
   };

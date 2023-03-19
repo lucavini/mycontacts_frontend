@@ -7,6 +7,7 @@ import {
   Header,
   ListHeader,
   InputSearchContainer,
+  ErrorContainer,
 } from './styles';
 
 import Loader from '../../Components/Loader';
@@ -14,6 +15,8 @@ import Loader from '../../Components/Loader';
 import arrow from '../../assets/icons/arrow.svg';
 import edit from '../../assets/icons/edit.svg';
 import trash from '../../assets/icons/delete.svg';
+import sad from '../../assets/images/sad.svg';
+import Button from '../../Components/Button';
 
 function Home() {
   const {
@@ -21,6 +24,8 @@ function Home() {
     searchTerm,
     filteredContacts,
     isLoading,
+    hasError,
+    handleTryAgain,
     handleToggleOrderBy,
     handleChangeSearchTerm,
   } = controller();
@@ -37,45 +42,65 @@ function Home() {
         />
       </InputSearchContainer>
 
-      <Header>
-        <strong>
-          {filteredContacts.length}
-          {filteredContacts.length === 1 ? ' Contato' : ' Contatos'}
-        </strong>
+      <Header hasError={hasError}>
+        {!hasError && (
+          <strong>
+            {filteredContacts.length}
+            {filteredContacts.length === 1 ? ' Contato' : ' Contatos'}
+          </strong>
+        )}
         <Link to="/new">Novo Contato</Link>
       </Header>
 
-      {!!filteredContacts.length && (
-        <ListHeader orderBy={orderBy}>
-          <button type="button" onClick={handleToggleOrderBy}>
-            <span>Nome</span>
-            <img src={arrow} alt="arrow" />
-          </button>
-        </ListHeader>
+      {hasError && (
+        <ErrorContainer>
+          <img src={sad} alt="sad" />
+          <div className="details">
+            <strong>ocorreu um erro ao obter os seus contatos!</strong>
+            <Button type="button" onClick={handleTryAgain}>
+              Tentar novamente
+            </Button>
+          </div>
+        </ErrorContainer>
       )}
 
-      {filteredContacts.map((contact) => (
-        <Card key={contact.id}>
-          <div className="info">
-            <div className="contact-name">
-              <strong>{contact.name}</strong>
-              {contact.category_name && <small>{contact.category_name}</small>}
-            </div>
+      {!hasError && (
+        <>
+          {!!filteredContacts.length && (
+            <ListHeader orderBy={orderBy}>
+              <button type="button" onClick={handleToggleOrderBy}>
+                <span>Nome</span>
+                <img src={arrow} alt="arrow" />
+              </button>
+            </ListHeader>
+          )}
 
-            <span>{contact.email}</span>
-            <span>{contact.phone}</span>
-          </div>
+          {filteredContacts.map((contact) => (
+            <Card key={contact.id}>
+              <div className="info">
+                <div className="contact-name">
+                  <strong>{contact.name}</strong>
+                  {contact.category_name && (
+                    <small>{contact.category_name}</small>
+                  )}
+                </div>
 
-          <div className="action">
-            <Link to={`/edit/${contact.id}`}>
-              <img src={edit} alt="edit" />
-            </Link>
-            <Link to="/">
-              <img src={trash} alt="trash" />
-            </Link>
-          </div>
-        </Card>
-      ))}
+                <span>{contact.email}</span>
+                <span>{contact.phone}</span>
+              </div>
+
+              <div className="action">
+                <Link to={`/edit/${contact.id}`}>
+                  <img src={edit} alt="edit" />
+                </Link>
+                <Link to="/">
+                  <img src={trash} alt="trash" />
+                </Link>
+              </div>
+            </Card>
+          ))}
+        </>
+      )}
     </Container>
   );
 }

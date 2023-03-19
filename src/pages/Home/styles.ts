@@ -27,10 +27,19 @@ export const InputSearchContainer = styled.div`
   }
 `;
 
-export const Header = styled.header`
+type HeaderProps = {
+  hasError?: boolean;
+};
+
+export const Header = styled.header<HeaderProps>`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  ${({ hasError }) => css`
+    justify-content: ${hasError ? 'flex-end' : 'space-between'};
+  `}
+  border-bottom: 2px solid #e5e5e5;
+  padding-bottom: 16px;
+
   margin-top: 32px;
 
   strong {
@@ -49,6 +58,23 @@ export const Header = styled.header`
     &:hover {
       background: ${({ theme }) => theme.colors.primary.main};
       color: #fff;
+    }
+  }
+`;
+
+export const ErrorContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+
+  .details {
+    margin-left: 24px;
+
+    strong {
+      font-size: 22px;
+      color: ${({ theme }) => theme.colors.danger.main};
+      display: block;
+      margin-bottom: 8px;
     }
   }
 `;
