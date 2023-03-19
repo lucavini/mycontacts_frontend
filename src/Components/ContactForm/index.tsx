@@ -8,7 +8,7 @@ import Button from '../Button';
 
 import isEmailValid from '../../utils/isEmailValid';
 import formatPhone from '../../utils/formatPhone';
-import useErrors from '../../hooks/useErrors';
+import useErrors from '../../Shared/hooks/useErrors';
 
 import { Form, ButtonContainer } from './styles';
 

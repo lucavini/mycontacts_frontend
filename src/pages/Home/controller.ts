@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import ContactService from '../../Services/ContactService';
+import APIError from '../../Shared/Errors/APIError';
 
 interface Contact {
   category_id: string;
@@ -41,7 +42,12 @@ export function controller(): Controller {
         const contactsList = await ContactService.listContacts(orderBy);
         setContacts(contactsList);
       } catch (error) {
-        console.log('caiu no catch: ', error);
+        if (error instanceof APIError) {
+          console.log('Name: ', error.name);
+          console.log('Message: ', error.message);
+          console.log('Response: ', error.response);
+          console.log('Body: ', error.body);
+        }
       } finally {
         setIsLoading(false);
       }
