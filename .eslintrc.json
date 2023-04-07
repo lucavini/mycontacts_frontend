@@ -9,7 +9,7 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "react-hooks"],
   "rules": {
     "import/no-extraneous-dependencies": [
       "off",
@@ -22,6 +22,8 @@
     "function-paren-newline": "off",
     "implicit-arrow-linebreak": "off",
     "operator-linebreak": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
   }
 }
