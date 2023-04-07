@@ -1,0 +1,6 @@
+{
+  "lang": "en-US",
+  "min-len": 8,
+  "max-len": 200,
+  "showInvalidHeader": true
+}
