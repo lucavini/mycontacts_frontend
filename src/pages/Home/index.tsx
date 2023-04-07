@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { controller } from './controller';
+import useController from './useController';
 import {
   Card,
   Container,
@@ -28,7 +28,7 @@ function Home() {
     handleTryAgain,
     handleToggleOrderBy,
     handleChangeSearchTerm,
-  } = controller();
+  } = useController();
 
   return (
     <Container>
