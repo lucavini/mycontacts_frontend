@@ -1,13 +1,17 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-import GlobalStyles from 'styles/global';
-import defaultTheme from 'styles/themes/default';
-
 import Header from '@Components/Header';
-import Routes from 'routes';
+import Routes from 'App/routes';
+import GlobalStyles from '~Styles/global';
+import defaultTheme from '~Styles/themes/default';
 
-import { Container } from './styles';
+const Container = styled.div`
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 16px;
+`;
 
 function App() {
   return (

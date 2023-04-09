@@ -7,8 +7,8 @@ import Select from '@Components/Select';
 import Button from '@Components/Button';
 
 import useErrors from 'Shared/hooks/useErrors';
-import isEmailValid from '~Utils/isEmailValid';
-import formatPhone from '~Utils/formatPhone';
+import isEmailValid from 'Shared/utils/isEmailValid';
+import formatPhone from 'Shared/utils/formatPhone';
 
 import { Form, ButtonContainer } from './styles';
 

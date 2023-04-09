@@ -1,5 +1,5 @@
 import APIError from '../../Errors/APIError';
-import delay from '../../../utils/delay';
+import delay from '../../utils/delay';
 
 export default class HttpClient {
   baseUrl: string;
