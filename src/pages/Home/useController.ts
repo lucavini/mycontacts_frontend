@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactService from '../../Shared/Services/ContactService';
+import ContactService from 'Shared/Services/ContactService';
 
 export interface Controller {
   filteredContacts: models.Contact[];

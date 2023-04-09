@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Arrow from 'assets/icons/arrow.svg';
 import { Container } from './styles';
-
-import Arrow from '../../assets/icons/arrow.svg';
 
 type Props = {
   title: string;

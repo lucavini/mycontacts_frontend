@@ -1,6 +1,6 @@
 import React from 'react';
-import PageHeader from '../../Components/PageHeader';
-import ContactForm from '../../Components/ContactForm';
+import ContactForm from 'Components/ContactForm';
+import PageHeader from 'Components/PageHeader';
 
 function NewContact() {
   return (

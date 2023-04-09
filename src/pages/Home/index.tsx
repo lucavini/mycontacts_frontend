@@ -1,6 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useController from './useController';
+import Loader from 'Components/Loader';
+import arrow from 'assets/icons/arrow.svg';
+
+import edit from 'assets/icons/edit.svg';
+import trash from 'assets/icons/delete.svg';
+import sad from 'assets/images/sad.svg';
+import Button from 'Components/Button';
+
 import {
   Card,
   Container,
@@ -9,14 +16,7 @@ import {
   InputSearchContainer,
   ErrorContainer,
 } from './styles';
-
-import Loader from '../../Components/Loader';
-
-import arrow from '../../assets/icons/arrow.svg';
-import edit from '../../assets/icons/edit.svg';
-import trash from '../../assets/icons/delete.svg';
-import sad from '../../assets/images/sad.svg';
-import Button from '../../Components/Button';
+import useController from './useController';
 
 function Home() {
   const {

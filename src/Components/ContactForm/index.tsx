@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 
-import FormGroup from '../FormGroup';
-import Input from '../Input';
-import Select from '../Select';
-import Button from '../Button';
+import FormGroup from 'Components/FormGroup';
+import Input from 'Components/Input';
+import Select from 'Components/Select';
+import Button from 'Components/Button';
 
-import isEmailValid from '../../utils/isEmailValid';
-import formatPhone from '../../utils/formatPhone';
-import useErrors from '../../Shared/hooks/useErrors';
+import isEmailValid from 'utils/isEmailValid';
+import formatPhone from 'utils/formatPhone';
+import useErrors from 'Shared/hooks/useErrors';
 
 import { Form, ButtonContainer } from './styles';
 
