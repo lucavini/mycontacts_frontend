@@ -21,8 +21,8 @@
       "@Pages/*": ["pages/*"],
       "~Assets/*": ["assets/*"],
       "~Utils/*": ["utils/*"],
-      "~Services/*": ["Shared/Services/*"],
-  }
+      "~Services/*": ["Shared/Services/*"]
+    }
   },
   "include": ["src"]
 }
