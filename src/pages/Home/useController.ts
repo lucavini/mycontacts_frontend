@@ -1,17 +1,8 @@
 import React from 'react';
-import ContactService from '../../Services/ContactService';
-
-interface Contact {
-  category_id: string;
-  category_name: string;
-  email: string;
-  id: string;
-  name: string;
-  phone: string;
-}
+import ContactService from '../../Shared/Services/ContactService';
 
 export interface Controller {
-  filteredContacts: Contact[];
+  filteredContacts: models.Contact[];
   orderBy: string;
   searchTerm: string;
   isLoading: boolean;
@@ -22,7 +13,7 @@ export interface Controller {
 }
 
 function useController(): Controller {
-  const [contacts, setContacts] = React.useState<Contact[]>([]);
+  const [contacts, setContacts] = React.useState<models.Contact[]>([]);
   const [orderBy, setOrderBy] = React.useState('asc');
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
