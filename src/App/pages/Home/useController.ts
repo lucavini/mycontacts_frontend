@@ -3,6 +3,7 @@ import ContactService from '~Services/ContactService';
 
 export interface Controller {
   filteredContacts: models.Contact[];
+  contacts: models.Contact[];
   orderBy: string;
   searchTerm: string;
   isLoading: boolean;
@@ -19,19 +20,16 @@ function useController(): Controller {
   const [isLoading, setIsLoading] = React.useState(true);
   const [hasError, setHasError] = React.useState(false);
 
-  const filteredContacts = React.useMemo(
-    () =>
-      contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      ),
-    [contacts, searchTerm],
-  );
+  const filteredContacts = React.useMemo(() => contacts.filter((contact) => (
+    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )), [contacts, searchTerm]);
 
   const loadContact = React.useCallback(async () => {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
+
       const contactsList = await ContactService.listContacts(orderBy);
+
       setHasError(false);
       setContacts(contactsList);
     } catch (error) {
@@ -62,6 +60,7 @@ function useController(): Controller {
     searchTerm,
     isLoading,
     filteredContacts,
+    contacts,
     hasError,
     handleTryAgain,
     handleToggleOrderBy,

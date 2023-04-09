@@ -28,14 +28,14 @@ export const InputSearchContainer = styled.div`
 `;
 
 type HeaderProps = {
-  hasError?: boolean;
+  justifyContent?: string;
 };
 
 export const Header = styled.header<HeaderProps>`
   display: flex;
   align-items: center;
-  ${({ hasError }) => css`
-    justify-content: ${hasError ? 'flex-end' : 'space-between'};
+  ${({ justifyContent }) => css`
+    justify-content: ${justifyContent ?? 'space-between'};
   `}
   border-bottom: 2px solid #e5e5e5;
   padding-bottom: 16px;
@@ -75,6 +75,23 @@ export const ErrorContainer = styled.div`
       color: ${({ theme }) => theme.colors.danger.main};
       display: block;
       margin-bottom: 8px;
+    }
+  }
+`;
+
+export const EmptyListContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    color: ${({ theme }) => theme.colors.gray[200]};
+    margin-top: 8px;
+    text-align: center;
+
+    strong {
+      color: ${({ theme }) => theme.colors.primary.main};
     }
   }
 `;
