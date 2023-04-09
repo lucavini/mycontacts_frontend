@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyles from 'styles/global';
 import defaultTheme from 'styles/themes/default';
 
-import Header from 'Components/Header';
+import Header from '@Components/Header';
 import Routes from 'routes';
 
 import { Container } from './styles';

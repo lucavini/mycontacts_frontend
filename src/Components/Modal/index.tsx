@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Button from '@Components/Button';
 import { Overlay, Container, Footer } from './styles';
-
-import Button from '../Button';
 
 type Props = {
   danger?: boolean;

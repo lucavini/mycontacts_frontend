@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Loader from 'Components/Loader';
-import arrow from 'assets/icons/arrow.svg';
 
-import edit from 'assets/icons/edit.svg';
-import trash from 'assets/icons/delete.svg';
-import sad from 'assets/images/sad.svg';
-import Button from 'Components/Button';
+import Loader from '@Components/Loader';
+import Button from '@Components/Button';
+
+import arrow from '~Assets/icons/arrow.svg';
+import edit from '~Assets/icons/edit.svg';
+import trash from '~Assets/icons/delete.svg';
+import sad from '~Assets/images/sad.svg';
 
 import {
   Card,

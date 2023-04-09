@@ -15,6 +15,7 @@
       "off",
       { "devDependencies": true, "dependencies": true }
     ],
+    "import/extensions": "off",
     "import/prefer-default-export": "off",
     "object-curly-newline": "off",
     "react/require-default-props": "off",
