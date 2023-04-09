@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,6 +11,7 @@ import edit from '~Assets/icons/edit.svg';
 import trash from '~Assets/icons/delete.svg';
 import sad from '~Assets/images/sad.svg';
 import box from '~Assets/images/empty-box.svg';
+import magnifierQuestion from '~Assets/images/magnifier-question.svg';
 
 import {
   Card,
@@ -19,6 +21,7 @@ import {
   InputSearchContainer,
   ErrorContainer,
   EmptyListContainer,
+  SearchNotfound,
 } from './styles';
 
 import useController from './useController';
@@ -83,7 +86,7 @@ function Home() {
 
       {!hasError && (
         <>
-          {contacts.length < 1 && !isLoading && (
+          {(contacts.length < 1 && !isLoading) && (
             <EmptyListContainer>
               <img src={box} alt="emptybox" />
               <p>
@@ -92,6 +95,16 @@ function Home() {
                 à cima para cadastrar o seu primeiro!
               </p>
             </EmptyListContainer>
+          )}
+
+          {(contacts.length > 0 && filteredContacts.length < 1) && (
+            <SearchNotfound>
+              <img src={magnifierQuestion} alt="magnifier Question" />
+              <span>
+                Nenhum resultado foi encontrado para
+                <strong> ”{searchTerm}”.</strong>
+              </span>
+            </SearchNotfound>
           )}
 
           {!!filteredContacts.length && (
