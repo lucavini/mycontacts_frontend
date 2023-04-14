@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 
 import FormGroup from '@Components/FormGroup';
@@ -6,9 +5,7 @@ import Input from '@Components/Input';
 import Select from '@Components/Select';
 import Button from '@Components/Button';
 
-import useErrors from 'Shared/hooks/useErrors';
-import isEmailValid from 'Shared/utils/isEmailValid';
-import formatPhone from 'Shared/utils/formatPhone';
+import useController from './useController';
 
 import { Form, ButtonContainer } from './styles';
 
@@ -17,43 +14,21 @@ type Props = {
 };
 
 function ContactForm({ buttonLabel }: Props) {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [category, setCategory] = React.useState('');
-
-  const { errors, setError, removeError, gerErrorMessageByFieldName } =
-    useErrors<'name' | 'email' | 'phone'>();
-
-  const isFormValid = name && errors.length === 0;
-
-  function handleNameChange({ target }: React.ChangeEvent<HTMLInputElement>) {
-    setName(target.value);
-
-    if (!target.value) {
-      setError({ field: 'name', message: 'Nome é obrigatório.' });
-    } else {
-      removeError('email');
-    }
-  }
-
-  function handleEmailChange({ target }: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(target.value);
-
-    if (target.value && !isEmailValid(target.value)) {
-      setError({ field: 'email', message: 'E-mail inválido' });
-    } else {
-      removeError('email');
-    }
-  }
-
-  function handlePhoneChange({ target }: React.ChangeEvent<HTMLInputElement>) {
-    setPhone(formatPhone(target.value));
-  }
-
-  function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-  }
+  const {
+    name,
+    email,
+    phone,
+    category,
+    categories,
+    isFormValid,
+    isLoadingCategories,
+    setCategory,
+    handleSubmit,
+    handleNameChange,
+    handlePhoneChange,
+    handleEmailChange,
+    gerErrorMessageByFieldName,
+  } = useController();
 
   return (
     <Form onSubmit={handleSubmit} noValidate>
@@ -85,14 +60,18 @@ function ContactForm({ buttonLabel }: Props) {
         />
       </FormGroup>
 
-      <FormGroup>
+      <FormGroup isLoading={isLoadingCategories}>
         <Select
           value={category}
           onChange={({ target }) => setCategory(target.value)}
+          disabled={isLoadingCategories}
         >
           <option value="">Categoria</option>
-          <option value="instagram">Instagram</option>
-          <option value="discord">Discord</option>
+          {categories.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          ))}
         </Select>
       </FormGroup>
 
