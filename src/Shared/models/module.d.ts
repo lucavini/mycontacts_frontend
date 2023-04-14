@@ -10,10 +10,6 @@ export interface Contact {
 }
 
 export interface Category {
-  category_id: string;
-  category_name: string;
-  email: string;
   id: string;
   name: string;
-  phone: string;
 }
