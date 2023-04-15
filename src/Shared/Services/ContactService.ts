@@ -10,6 +10,12 @@ class ContactService {
   async listContacts(orderBy = 'asc') {
     return this.httpClient.get(`/contacts?orderBy=${orderBy}`);
   }
+
+  async createContact(contact: models.Contact) {
+    return this.httpClient.post('/contacts', {
+      body: JSON.stringify(contact),
+    });
+  }
 }
 
 export default new ContactService();
