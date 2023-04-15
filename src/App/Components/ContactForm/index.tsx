@@ -11,9 +11,10 @@ import { Form, ButtonContainer } from './styles';
 
 type Props = {
   buttonLabel: string;
+  onSubmit: (contact: models.Contact) => void;
 };
 
-function ContactForm({ buttonLabel }: Props) {
+function ContactForm({ buttonLabel, onSubmit }: Props) {
   const {
     name,
     email,
@@ -28,7 +29,7 @@ function ContactForm({ buttonLabel }: Props) {
     handlePhoneChange,
     handleEmailChange,
     gerErrorMessageByFieldName,
-  } = useController();
+  } = useController({ onSubmit });
 
   return (
     <Form onSubmit={handleSubmit} noValidate>

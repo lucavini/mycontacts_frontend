@@ -6,6 +6,10 @@ import formatPhone from 'Shared/utils/formatPhone';
 
 import CategoryService from '~Services/CategoryService';
 
+type IProps = {
+  onSubmit: (contact: models.Contact) => void;
+};
+
 interface Controller {
   isFormValid: boolean | string;
   name: string;
@@ -24,7 +28,7 @@ interface Controller {
   ) => string | undefined;
 }
 
-function useController(): Controller {
+function useController({ onSubmit }: IProps): Controller {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
@@ -78,6 +82,14 @@ function useController(): Controller {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    onSubmit({
+      name,
+      email,
+      phone,
+      category_id: category,
+      category_name: '',
+      id: '',
+    });
   }
 
   return {
