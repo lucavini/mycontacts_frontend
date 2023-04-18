@@ -7,34 +7,17 @@ import formatPhone from 'Shared/utils/formatPhone';
 import CategoryService from '~Services/CategoryService';
 
 type IProps = {
-  onSubmit: (contact: models.Contact) => void;
+  onSubmit: (contact: models.Contact) => Promise<void>;
 };
 
-interface Controller {
-  isFormValid: boolean | string;
-  name: string;
-  email: string;
-  phone: string;
-  category: string;
-  categories: models.Category[];
-  isLoadingCategories: boolean;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
-  handleNameChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
-  handleEmailChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
-  handlePhoneChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (event: React.FormEvent) => void;
-  gerErrorMessageByFieldName: (
-    fieldName: 'name' | 'email' | 'phone',
-  ) => string | undefined;
-}
-
-function useController({ onSubmit }: IProps): Controller {
+function useController({ onSubmit }: IProps) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [categories, setCategories] = React.useState<models.Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = React.useState(true);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const { errors, setError, removeError, gerErrorMessageByFieldName } =
     useErrors<'name' | 'email' | 'phone'>();
@@ -60,7 +43,10 @@ function useController({ onSubmit }: IProps): Controller {
     setName(target.value);
 
     if (!target.value) {
-      setError({ field: 'name', message: 'Nome é obrigatório.' });
+      setError({
+        field: 'name',
+        message: 'Nome é obrigatório.',
+      });
     } else {
       removeError('email');
     }
@@ -70,7 +56,10 @@ function useController({ onSubmit }: IProps): Controller {
     setEmail(target.value);
 
     if (target.value && !isEmailValid(target.value)) {
-      setError({ field: 'email', message: 'E-mail inválido' });
+      setError({
+        field: 'email',
+        message: 'E-mail inválido',
+      });
     } else {
       removeError('email');
     }
@@ -80,9 +69,12 @@ function useController({ onSubmit }: IProps): Controller {
     setPhone(formatPhone(target.value));
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    onSubmit({
+
+    setIsSubmitting(true);
+
+    await onSubmit({
       name,
       email,
       phone,
@@ -90,6 +82,8 @@ function useController({ onSubmit }: IProps): Controller {
       category_name: '',
       id: '',
     });
+
+    setIsSubmitting(false);
   }
 
   return {
@@ -99,6 +93,7 @@ function useController({ onSubmit }: IProps): Controller {
     category,
     categories,
     isFormValid,
+    isSubmitting,
     isLoadingCategories,
     setCategory,
     handleSubmit,
