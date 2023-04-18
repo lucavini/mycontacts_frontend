@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 import Header from '@Components/Header';
 import Routes from 'App/routes';
+import ToastContainer from '@Components/Toast/ToastContainer';
 import GlobalStyles from '~Styles/global';
 import defaultTheme from '~Styles/themes/default';
 
@@ -18,6 +19,8 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyles />
+        <ToastContainer />
+
         <Container>
           <Header />
           <Routes />
