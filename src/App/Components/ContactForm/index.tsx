@@ -11,7 +11,7 @@ import { Form, ButtonContainer } from './styles';
 
 type Props = {
   buttonLabel: string;
-  onSubmit: (contact: models.Contact) => void;
+  onSubmit: (contact: models.Contact) => Promise<void>;
 };
 
 function ContactForm({ buttonLabel, onSubmit }: Props) {
@@ -22,6 +22,7 @@ function ContactForm({ buttonLabel, onSubmit }: Props) {
     category,
     categories,
     isFormValid,
+    isSubmitting,
     isLoadingCategories,
     setCategory,
     handleSubmit,
@@ -39,6 +40,7 @@ function ContactForm({ buttonLabel, onSubmit }: Props) {
           value={name}
           onChange={handleNameChange}
           error={!!gerErrorMessageByFieldName('name')}
+          disabled={isSubmitting}
         />
       </FormGroup>
 
@@ -49,6 +51,7 @@ function ContactForm({ buttonLabel, onSubmit }: Props) {
           value={email}
           onChange={handleEmailChange}
           error={!!gerErrorMessageByFieldName('email')}
+          disabled={isSubmitting}
         />
       </FormGroup>
 
@@ -58,6 +61,7 @@ function ContactForm({ buttonLabel, onSubmit }: Props) {
           value={phone}
           onChange={handlePhoneChange}
           maxLength={15}
+          disabled={isSubmitting}
         />
       </FormGroup>
 
@@ -65,7 +69,7 @@ function ContactForm({ buttonLabel, onSubmit }: Props) {
         <Select
           value={category}
           onChange={({ target }) => setCategory(target.value)}
-          disabled={isLoadingCategories}
+          disabled={isLoadingCategories || isSubmitting}
         >
           <option value="">Categoria</option>
           {categories.map((item) => (
@@ -77,7 +81,7 @@ function ContactForm({ buttonLabel, onSubmit }: Props) {
       </FormGroup>
 
       <ButtonContainer>
-        <Button type="submit" disabled={!isFormValid}>
+        <Button type="submit" disabled={!isFormValid} isLoading={isSubmitting}>
           {buttonLabel}
         </Button>
       </ButtonContainer>
