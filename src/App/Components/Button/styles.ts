@@ -4,7 +4,7 @@ type Props = {
   danger?: boolean;
 };
 
-export default styled.button<Props>`
+export const StyledButton = styled.button<Props>`
   height: 52px;
   padding: 0 16px;
   border: none;
@@ -15,6 +15,9 @@ export default styled.button<Props>`
   color: #fff;
   border-radius: 4px;
   transition: background 0.2s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary.light};
@@ -29,7 +32,9 @@ export default styled.button<Props>`
     cursor: default;
   }
 
-  ${({ theme, danger }) => danger && css`
+  ${({ theme, danger }) =>
+    danger &&
+    css`
       background: ${theme.colors.danger.main};
 
       &:hover {
@@ -39,5 +44,5 @@ export default styled.button<Props>`
       &:active {
         background: ${theme.colors.danger.dark};
       }
-  `}
+    `}
 `;
