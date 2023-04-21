@@ -2,6 +2,7 @@ import React from 'react';
 import ContactForm from '@Components/ContactForm';
 import PageHeader from '@Components/PageHeader';
 import ContactService from '~Services/ContactService';
+import toast from '~Utils/toast';
 
 function NewContact() {
   async function handleSubmit(formData: models.Contact) {
@@ -11,9 +12,13 @@ function NewContact() {
         category_id: formData.category_id,
       };
 
-      const response = await ContactService.createContact(contact);
-      console.log('response: ', response);
-    } catch (error) {}
+      await ContactService.createContact(contact);
+    } catch (error) {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao cadastrar o contato!',
+      });
+    }
   }
 
   return (
