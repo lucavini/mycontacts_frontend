@@ -7,13 +7,13 @@ import checkCircleIcon from '~Assets/icons/check-circle.svg';
 
 type Props = {
   text: string;
-  type?: 'default' | 'error' | 'success';
+  type: toast.ToastTypes['type'];
 };
 
 function ToastMessage({ text, type = 'default' }: Props) {
   return (
     <Container type={type}>
-      {type === 'error' && <img src={xCircleIcon} alt="error" />}
+      {type === 'danger' && <img src={xCircleIcon} alt="error" />}
       {type === 'success' && <img src={checkCircleIcon} alt="success" />}
       <strong>{text}</strong>
     </Container>

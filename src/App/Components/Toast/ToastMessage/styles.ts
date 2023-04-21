@@ -7,16 +7,12 @@ const containerVariants = {
   success: css`
     background: ${({ theme }) => theme.colors.success.main};
   `,
-  error: css`
+  danger: css`
     background: ${({ theme }) => theme.colors.danger.main};
   `,
 };
 
-type Props = {
-  type: 'default' | 'error' | 'success';
-};
-
-export const Container = styled.div<Props>`
+export const Container = styled.div<toast.ToastTypes>`
   padding: 16px 32px;
   background: ${({ theme }) => theme.colors.primary.main};
   color: #fff;
@@ -31,7 +27,7 @@ export const Container = styled.div<Props>`
     margin-top: 12px;
   }
 
-  strong {
-    margin-left: 8px;
+  img {
+    margin-right: 8px;
   }
 `;
