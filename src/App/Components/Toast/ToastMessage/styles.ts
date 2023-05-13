@@ -22,6 +22,7 @@ export const Container = styled.div<toast.ToastTypes>`
   align-items: center;
   justify-content: center;
   ${({ type }) => containerVariants[type] || containerVariants.default}
+  cursor: pointer;
 
   & + & {
     margin-top: 12px;

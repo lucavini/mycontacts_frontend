@@ -13,6 +13,10 @@ function NewContact() {
       };
 
       await ContactService.createContact(contact);
+      toast({
+        type: 'success',
+        text: 'Contato cadastrado com sucesso',
+      });
     } catch (error) {
       toast({
         type: 'danger',
