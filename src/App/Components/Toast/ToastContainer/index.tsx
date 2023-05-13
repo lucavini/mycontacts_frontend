@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { toastEventManager } from 'Shared/utils/toast';
 import { Container } from './styles';
 import ToastMessage from '../ToastMessage';
 
@@ -13,9 +14,8 @@ function ToastContainer() {
   const [messages, setMessages] = React.useState<Message[]>([]);
 
   React.useEffect(() => {
-    function handleAddToats(event: Event) {
-      const customEvent = event as CustomEvent<toast.ToastDetails>;
-      const { text, type } = customEvent.detail;
+    function handleAddToats(event: toast.ToastDetails) {
+      const { text, type } = event;
 
       setMessages((prevState) => [
         ...prevState,
@@ -23,10 +23,10 @@ function ToastContainer() {
       ]);
     }
 
-    document.addEventListener('addtoast', handleAddToats);
+    toastEventManager.on('addtoast', handleAddToats);
 
     return () => {
-      document.removeEventListener('addtoast', handleAddToats);
+      toastEventManager.removeListener('addtoast', handleAddToats);
     };
   }, []);
 
