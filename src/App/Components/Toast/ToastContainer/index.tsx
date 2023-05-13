@@ -4,10 +4,8 @@ import { toastEventManager } from 'Shared/utils/toast';
 import { Container } from './styles';
 import ToastMessage from '../ToastMessage';
 
-interface Message {
+interface Message extends toast.ToastDetails {
   id: number;
-  type: toast.ToastTypes['type'];
-  text: string;
 }
 
 function ToastContainer() {
@@ -15,11 +13,11 @@ function ToastContainer() {
 
   React.useEffect(() => {
     function handleAddToats(event: toast.ToastDetails) {
-      const { text, type } = event;
+      const { text, type, duration } = event;
 
       setMessages((prevState) => [
         ...prevState,
-        { id: Math.random(), text, type },
+        { id: Math.random(), text, type, duration },
       ]);
     }
 
@@ -30,11 +28,11 @@ function ToastContainer() {
     };
   }, []);
 
-  function handleRemoveMessage(id: number) {
+  const handleRemoveMessage = React.useCallback((id: number) => {
     setMessages((prevState) =>
       prevState.filter((message) => message.id !== id),
     );
-  }
+  }, []);
 
   return (
     <Container>

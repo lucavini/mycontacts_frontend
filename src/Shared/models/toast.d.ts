@@ -11,4 +11,5 @@ export interface ToastTypes {
 export interface ToastDetails {
   type: ToastTypes['type'];
   text: string;
+  duration?: number;
 }

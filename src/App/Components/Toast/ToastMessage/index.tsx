@@ -10,28 +10,38 @@ type Props = {
     id: number;
     text: string;
     type: toast.ToastTypes['type'];
+    duration?: number;
   };
   onRemoveMessage: (id: number) => void;
 };
 
-function ToastMessage({
-  message: { id, text, type = 'default' },
-  onRemoveMessage,
-}: Props) {
+function ToastMessage({ message, onRemoveMessage }: Props) {
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() =>
+      onRemoveMessage(message.id), message.duration || 7000,
+    );
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [message, onRemoveMessage]);
+
   function handleRemoveToast() {
-    onRemoveMessage(id);
+    onRemoveMessage(message.id);
   }
 
   return (
     <Container
       tabIndex={0}
       role="button"
-      type={type}
+      type={message.type}
       onClick={handleRemoveToast}
     >
-      {type === 'danger' && <img src={xCircleIcon} alt="error" />}
-      {type === 'success' && <img src={checkCircleIcon} alt="success" />}
-      <strong>{text}</strong>
+      {message.type === 'danger' && <img src={xCircleIcon} alt="error" />}
+      {message.type === 'success' && (
+        <img src={checkCircleIcon} alt="success" />
+      )}
+      <strong>{message.text}</strong>
     </Container>
   );
 }
