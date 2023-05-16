@@ -8,6 +8,7 @@ import toast from '~Utils/toast';
 
 type ContactFormRef = {
   setFieldValues: (contact: models.Contact) => void;
+  setResetFields: () => void;
 };
 
 function EditContact() {

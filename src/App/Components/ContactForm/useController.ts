@@ -8,6 +8,7 @@ import CategoryService from '~Services/CategoryService';
 
 type ContactFormRef = {
   setFieldValues: (contact: models.Contact) => void;
+  setResetFields: () => void;
 };
 
 type IProps = {
@@ -30,6 +31,13 @@ function useController({ onSubmit, ref }: IProps) {
       setEmail(contact.email ?? '');
       setPhone(formatPhone(contact.phone) ?? '');
       setCategory(contact.category_id ?? '');
+    },
+
+    setResetFields: () => {
+      setName('');
+      setEmail('');
+      setPhone('');
+      setCategory('');
     },
   }), []);
 
@@ -96,10 +104,6 @@ function useController({ onSubmit, ref }: IProps) {
       category_name: '',
       id: '',
     });
-    setName('');
-    setEmail('');
-    setPhone('');
-    setCategory('');
 
     setIsSubmitting(false);
   }

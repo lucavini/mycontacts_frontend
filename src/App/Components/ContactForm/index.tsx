@@ -16,6 +16,7 @@ type Props = {
 
 type ContactFormRef = {
   setFieldValues: (contact: models.Contact) => void;
+  setResetFields: () => void;
 };
 
 const ContactForm = React.forwardRef<ContactFormRef, Props>(
