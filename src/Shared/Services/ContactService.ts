@@ -15,6 +15,12 @@ class ContactService {
     return this.httpClient.get(`/contacts/${id}`);
   }
 
+  updateContact(id: string, contact: models.Contact) {
+    return this.httpClient.put(`/contacts/${id}`, {
+      body: JSON.stringify(contact),
+    });
+  }
+
   createContact(contact: models.Contact) {
     return this.httpClient.post('/contacts', {
       body: JSON.stringify(contact),

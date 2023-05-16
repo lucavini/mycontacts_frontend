@@ -55,4 +55,11 @@ export default class HttpClient {
       ...options,
     });
   }
+
+  put(path: string, options?: RequestInit) {
+    return this.makeRequest(path, {
+      method: 'PUT',
+      ...options,
+    });
+  }
 }

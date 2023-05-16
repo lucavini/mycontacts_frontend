@@ -38,14 +38,34 @@ function EditContact() {
   }, [id, history]);
 
   async function handleSubmit(formData: models.Contact) {
-    console.log('formData: ', formData);
+    try {
+      const contact = {
+        ...formData,
+      };
+
+      const updatedContact = await ContactService.updateContact(id, contact);
+
+      setContactName(updatedContact.name);
+      toast({
+        type: 'success',
+        text: 'Contato atualizado com sucesso',
+        duration: 3000,
+      });
+    } catch (error) {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao editar o contato!',
+      });
+    }
   }
 
   return (
     <>
       <Loader isLoading={isLoading} />
 
-      <PageHeader title={isLoading ? 'Carrengando...' : `Editar ${contactName}`} />
+      <PageHeader
+        title={isLoading ? 'Carrengando...' : `Editar ${contactName}`}
+      />
 
       <ContactForm
         ref={contactFormRef}
