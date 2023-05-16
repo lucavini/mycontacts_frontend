@@ -7,11 +7,15 @@ class ContactService {
     this.httpClient = new HttpClient('http://localhost:3333');
   }
 
-  async listContacts(orderBy = 'asc') {
+  listContacts(orderBy = 'asc') {
     return this.httpClient.get(`/contacts?orderBy=${orderBy}`);
   }
 
-  async createContact(contact: models.Contact) {
+  getContactById(id: string) {
+    return this.httpClient.get(`/contacts/${id}`);
+  }
+
+  createContact(contact: models.Contact) {
     return this.httpClient.post('/contacts', {
       body: JSON.stringify(contact),
     });
