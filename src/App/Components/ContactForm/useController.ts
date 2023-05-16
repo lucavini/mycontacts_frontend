@@ -6,11 +6,16 @@ import formatPhone from 'Shared/utils/formatPhone';
 
 import CategoryService from '~Services/CategoryService';
 
-type IProps = {
-  onSubmit: (contact: models.Contact) => Promise<void>;
+type ContactFormRef = {
+  setFieldValues: (contact: models.Contact) => void;
 };
 
-function useController({ onSubmit }: IProps) {
+type IProps = {
+  onSubmit: (contact: models.Contact) => Promise<void>;
+  ref: React.ForwardedRef<ContactFormRef>;
+};
+
+function useController({ onSubmit, ref }: IProps) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
@@ -18,6 +23,15 @@ function useController({ onSubmit }: IProps) {
   const [categories, setCategories] = React.useState<models.Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = React.useState(true);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  React.useImperativeHandle(ref, () => ({
+    setFieldValues: (contact: models.Contact) => {
+      setName(contact.name ?? '');
+      setEmail(contact.email ?? '');
+      setPhone(formatPhone(contact.phone) ?? '');
+      setCategory(contact.category_id ?? '');
+    },
+  }), []);
 
   const { errors, setError, removeError, gerErrorMessageByFieldName } =
     useErrors<'name' | 'email' | 'phone'>();
@@ -82,6 +96,10 @@ function useController({ onSubmit }: IProps) {
       category_name: '',
       id: '',
     });
+    setName('');
+    setEmail('');
+    setPhone('');
+    setCategory('');
 
     setIsSubmitting(false);
   }
