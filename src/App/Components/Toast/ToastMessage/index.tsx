@@ -17,8 +17,9 @@ type Props = {
 
 function ToastMessage({ message, onRemoveMessage }: Props) {
   React.useEffect(() => {
-    const timeoutId = setTimeout(() =>
-      onRemoveMessage(message.id), message.duration || 7000,
+    const timeoutId = setTimeout(
+      () => onRemoveMessage(message.id),
+      message.duration || 4000,
     );
 
     return () => {
