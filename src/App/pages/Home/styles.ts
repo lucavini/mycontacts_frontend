@@ -94,13 +94,13 @@ export const EmptyListContainer = styled.div`
       color: ${({ theme }) => theme.colors.primary.main};
     }
   }
-  `;
+`;
 
 export const SearchNotfound = styled.div`
   margin-top: 16px;
   display: flex;
   align-items: flex-start;
-  
+
   span {
     color: ${({ theme }) => theme.colors.gray[200]};
     margin-left: 24px;
@@ -176,8 +176,11 @@ export const Card = styled.div`
     display: flex;
     align-items: center;
 
-    a {
+    a,
+    button {
       margin-left: 8px;
+      background: transparent;
+      border: none;
     }
   }
 `;

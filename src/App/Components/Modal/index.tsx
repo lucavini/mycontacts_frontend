@@ -3,26 +3,56 @@ import ReactDOM from 'react-dom';
 import Button from '@Components/Button';
 import { Overlay, Container, Footer } from './styles';
 
-type Props = {
-  danger?: boolean;
+type ButtonProps = {
+  label?: string;
+  onClick: () => void;
 };
 
-function Modal({ danger = false }: Props) {
+type Props = {
+  danger?: boolean;
+  title: string;
+  visible: boolean;
+  children?: React.ReactNode;
+  cancelButtonProps?: ButtonProps;
+  confirmButtonProps?: ButtonProps;
+};
+
+function Modal({
+  danger = false,
+  title,
+  children,
+  visible,
+  cancelButtonProps,
+  confirmButtonProps,
+}: Props) {
   const modalRoot = document.getElementById('modal-root') as HTMLElement;
+
+  if (!visible) {
+    return null;
+  }
 
   return ReactDOM.createPortal(
     <Overlay>
       <Container danger={danger}>
-        <h1>Titulo do modal</h1>
-        <p>Corpo do modal</p>
+        <h1 className="modal-title">{title}</h1>
+
+        <div className="modal-body">{children}</div>
 
         <Footer>
-          <button className="cancelButton" type="button">
-            Cancelar
+          <button
+            onClick={cancelButtonProps?.onClick}
+            className="cancelButton"
+            type="button"
+          >
+            {cancelButtonProps?.label ?? 'Cancelar'}
           </button>
 
-          <Button danger={danger} type="button">
-            Deletar
+          <Button
+            onClick={confirmButtonProps?.onClick}
+            danger={danger}
+            type="button"
+          >
+            {confirmButtonProps?.label ?? 'Confirmar'}
           </Button>
         </Footer>
       </Container>

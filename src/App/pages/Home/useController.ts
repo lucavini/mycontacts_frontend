@@ -8,6 +8,10 @@ export interface Controller {
   searchTerm: string;
   isLoading: boolean;
   hasError: boolean;
+  isDeleteModalVisible: boolean;
+  contactBeingDeleted: models.Contact | undefined;
+  handleChangeModalVisibility: () => void;
+  handleDeleteContact: (contact: models.Contact) => void;
   handleToggleOrderBy: () => void;
   handleTryAgain: () => void;
   handleChangeSearchTerm: (value: string) => void;
@@ -19,6 +23,8 @@ function useController(): Controller {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
   const [hasError, setHasError] = React.useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = React.useState(false);
+  const [contactBeingDeleted, setContactBeingDeleted] = React.useState<models.Contact>();
 
   const filteredContacts = React.useMemo(() => contacts.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -55,13 +61,26 @@ function useController(): Controller {
     loadContact();
   }
 
+  function handleChangeModalVisibility() {
+    setIsDeleteModalVisible((prevState) => !prevState);
+  }
+
+  function handleDeleteContact(contact: models.Contact) {
+    handleChangeModalVisibility();
+    setContactBeingDeleted(contact);
+  }
+
   return {
     orderBy,
     searchTerm,
     isLoading,
     filteredContacts,
+    isDeleteModalVisible,
     contacts,
     hasError,
+    contactBeingDeleted,
+    handleDeleteContact,
+    handleChangeModalVisibility,
     handleTryAgain,
     handleToggleOrderBy,
     handleChangeSearchTerm,

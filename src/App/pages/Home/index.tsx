@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Loader from '@Components/Loader';
 import Button from '@Components/Button';
+import Modal from '@Components/Modal';
 
 import arrow from '~Assets/icons/arrow.svg';
 import edit from '~Assets/icons/edit.svg';
@@ -31,17 +32,36 @@ function Home() {
     orderBy,
     searchTerm,
     filteredContacts,
+    isDeleteModalVisible,
     contacts,
     isLoading,
     hasError,
+    contactBeingDeleted,
     handleTryAgain,
     handleToggleOrderBy,
+    handleChangeModalVisibility,
+    handleDeleteContact,
     handleChangeSearchTerm,
   } = useController();
 
   return (
     <Container>
       <Loader isLoading={isLoading} />
+
+      <Modal
+        danger
+        visible={isDeleteModalVisible}
+        title={`Tem certeza que deseja deletar o contato "${contactBeingDeleted?.name}" ?`}
+        confirmButtonProps={{
+          label: 'Deletar',
+          onClick: () => {},
+        }}
+        cancelButtonProps={{
+          onClick: handleChangeModalVisibility,
+        }}
+      >
+        <p>Essa ação não poderá ser desfeita!</p>
+      </Modal>
 
       {contacts.length > 0 && (
         <InputSearchContainer>
@@ -86,18 +106,18 @@ function Home() {
 
       {!hasError && (
         <>
-          {(contacts.length < 1 && !isLoading) && (
+          {contacts.length < 1 && !isLoading && (
             <EmptyListContainer>
               <img src={box} alt="emptybox" />
               <p>
                 Você ainda não tem nenhum contato cadastrado! Clique no botão
-                <strong> ”Novo contato” </strong>
-                à cima para cadastrar o seu primeiro!
+                <strong> ”Novo contato” </strong>à cima para cadastrar o seu
+                primeiro!
               </p>
             </EmptyListContainer>
           )}
 
-          {(contacts.length > 0 && filteredContacts.length < 1) && (
+          {contacts.length > 0 && filteredContacts.length < 1 && (
             <SearchNotfound>
               <img src={magnifierQuestion} alt="magnifier Question" />
               <span>
@@ -134,9 +154,9 @@ function Home() {
                 <Link to={`/edit/${contact.id}`}>
                   <img src={edit} alt="edit" />
                 </Link>
-                <Link to="/">
+                <button onClick={() => handleDeleteContact(contact)} type="button">
                   <img src={trash} alt="trash" />
-                </Link>
+                </button>
               </div>
             </Card>
           ))}
