@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Button from '@Components/Button';
+import ReactPortal from '@Components/ReactPortal';
 import { Overlay, Container, Footer } from './styles';
 
 type ButtonProps = {
@@ -27,41 +27,40 @@ function Modal({
   confirmButtonProps,
   isLoading = false,
 }: Props) {
-  const modalRoot = document.getElementById('modal-root') as HTMLElement;
-
   if (!visible) {
     return null;
   }
 
-  return ReactDOM.createPortal(
-    <Overlay>
-      <Container danger={danger}>
-        <h1 className="modal-title">{title}</h1>
+  return (
+    <ReactPortal containerId="modal-root">
+      <Overlay>
+        <Container danger={danger}>
+          <h1 className="modal-title">{title}</h1>
 
-        <div className="modal-body">{children}</div>
+          <div className="modal-body">{children}</div>
 
-        <Footer>
-          <button
-            onClick={cancelButtonProps?.onClick}
-            className="cancelButton"
-            type="button"
-            disabled={isLoading}
-          >
-            {cancelButtonProps?.label ?? 'Cancelar'}
-          </button>
+          <Footer>
+            <button
+              onClick={cancelButtonProps?.onClick}
+              className="cancelButton"
+              type="button"
+              disabled={isLoading}
+            >
+              {cancelButtonProps?.label ?? 'Cancelar'}
+            </button>
 
-          <Button
-            onClick={confirmButtonProps?.onClick}
-            danger={danger}
-            type="button"
-            isLoading={isLoading}
-          >
-            {confirmButtonProps?.label ?? 'Confirmar'}
-          </Button>
-        </Footer>
-      </Container>
-    </Overlay>,
-    modalRoot,
+            <Button
+              onClick={confirmButtonProps?.onClick}
+              danger={danger}
+              type="button"
+              isLoading={isLoading}
+            >
+              {confirmButtonProps?.label ?? 'Confirmar'}
+            </Button>
+          </Footer>
+        </Container>
+      </Overlay>
+    </ReactPortal>
   );
 }
 
