@@ -26,6 +26,10 @@ class ContactService {
       body: JSON.stringify(contact),
     });
   }
+
+  deleteContact(id: string) {
+    return this.httpClient.delete(`/contacts/${id}`);
+  }
 }
 
 export default new ContactService();

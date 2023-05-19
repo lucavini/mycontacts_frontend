@@ -36,10 +36,11 @@ const round = keyframes`
 
 type Props = {
   size: number;
+  danger?: boolean;
 };
 
 export const StyledSpinner = styled.div<Props>`
-  color: ${({ theme }) => theme.colors.primary.main};
+  color: ${({ theme, danger }) => (danger ? theme.colors.danger.main : theme.colors.primary.main)};
   font-size: ${({ size }) => `${size}px`};
   width: 1em;
   height: 1em;

@@ -12,6 +12,7 @@ type Props = {
   danger?: boolean;
   title: string;
   visible: boolean;
+  isLoading?: boolean;
   children?: React.ReactNode;
   cancelButtonProps?: ButtonProps;
   confirmButtonProps?: ButtonProps;
@@ -24,6 +25,7 @@ function Modal({
   visible,
   cancelButtonProps,
   confirmButtonProps,
+  isLoading = false,
 }: Props) {
   const modalRoot = document.getElementById('modal-root') as HTMLElement;
 
@@ -43,6 +45,7 @@ function Modal({
             onClick={cancelButtonProps?.onClick}
             className="cancelButton"
             type="button"
+            disabled={isLoading}
           >
             {cancelButtonProps?.label ?? 'Cancelar'}
           </button>
@@ -51,6 +54,7 @@ function Modal({
             onClick={confirmButtonProps?.onClick}
             danger={danger}
             type="button"
+            isLoading={isLoading}
           >
             {confirmButtonProps?.label ?? 'Confirmar'}
           </Button>

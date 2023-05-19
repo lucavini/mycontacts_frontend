@@ -62,4 +62,11 @@ export default class HttpClient {
       ...options,
     });
   }
+
+  delete(path: string, options?: RequestInit) {
+    return this.makeRequest(path, {
+      method: 'DELETE',
+      ...options,
+    });
+  }
 }

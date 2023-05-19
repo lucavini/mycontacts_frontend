@@ -1,6 +1,8 @@
 import React from 'react';
 import ContactService from '~Services/ContactService';
 
+import toast from '~Utils/toast';
+
 export interface Controller {
   filteredContacts: models.Contact[];
   contacts: models.Contact[];
@@ -9,9 +11,10 @@ export interface Controller {
   isLoading: boolean;
   hasError: boolean;
   isDeleteModalVisible: boolean;
-  contactBeingDeleted: models.Contact | undefined;
-  handleChangeModalVisibility: () => void;
-  handleDeleteContact: (contact: models.Contact) => void;
+  isLoadingDelete: boolean;
+  contactBeingDeleted: models.Contact | null;
+  handleChangeModalVisibility: (contact?: models.Contact) => void;
+  handleConfirmDeleteContact: () => void;
   handleToggleOrderBy: () => void;
   handleTryAgain: () => void;
   handleChangeSearchTerm: (value: string) => void;
@@ -24,11 +27,17 @@ function useController(): Controller {
   const [isLoading, setIsLoading] = React.useState(true);
   const [hasError, setHasError] = React.useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = React.useState(false);
-  const [contactBeingDeleted, setContactBeingDeleted] = React.useState<models.Contact>();
+  const [isLoadingDelete, setIsloadingDelete] = React.useState(false);
+  const [contactBeingDeleted, setContactBeingDeleted] =
+    React.useState<models.Contact | null>(null);
 
-  const filteredContacts = React.useMemo(() => contacts.filter((contact) => (
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )), [contacts, searchTerm]);
+  const filteredContacts = React.useMemo(
+    () =>
+      contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    [contacts, searchTerm],
+  );
 
   const loadContact = React.useCallback(async () => {
     try {
@@ -61,13 +70,37 @@ function useController(): Controller {
     loadContact();
   }
 
-  function handleChangeModalVisibility() {
+  function handleChangeModalVisibility(contact?: models.Contact) {
     setIsDeleteModalVisible((prevState) => !prevState);
+
+    if (contact) {
+      setContactBeingDeleted(contact);
+    }
   }
 
-  function handleDeleteContact(contact: models.Contact) {
-    handleChangeModalVisibility();
-    setContactBeingDeleted(contact);
+  async function handleConfirmDeleteContact() {
+    try {
+      setIsloadingDelete(true);
+      await ContactService.deleteContact(contactBeingDeleted?.id ?? '');
+
+      setContacts((prevState) =>
+        prevState.filter((contact) => contact.id !== contactBeingDeleted?.id),
+      );
+
+      handleChangeModalVisibility();
+
+      toast({
+        type: 'success',
+        text: 'Contato deletado com sucesso!',
+      });
+    } catch {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao deletar contato!',
+      });
+    } finally {
+      setIsloadingDelete(false);
+    }
   }
 
   return {
@@ -79,7 +112,8 @@ function useController(): Controller {
     contacts,
     hasError,
     contactBeingDeleted,
-    handleDeleteContact,
+    isLoadingDelete,
+    handleConfirmDeleteContact,
     handleChangeModalVisibility,
     handleTryAgain,
     handleToggleOrderBy,

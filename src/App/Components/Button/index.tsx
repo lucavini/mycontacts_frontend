@@ -15,7 +15,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 function Button(props: Props) {
   return (
     <StyledButton {...props} disabled={props.isLoading || props.disabled}>
-      {props.isLoading ? <Spinner size={16} /> : props.children}
+      {props.isLoading ? <Spinner danger={props.danger} size={16} /> : props.children}
     </StyledButton>
   );
 }

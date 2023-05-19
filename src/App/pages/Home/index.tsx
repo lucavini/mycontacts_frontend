@@ -37,10 +37,11 @@ function Home() {
     isLoading,
     hasError,
     contactBeingDeleted,
+    isLoadingDelete,
     handleTryAgain,
     handleToggleOrderBy,
     handleChangeModalVisibility,
-    handleDeleteContact,
+    handleConfirmDeleteContact,
     handleChangeSearchTerm,
   } = useController();
 
@@ -52,9 +53,10 @@ function Home() {
         danger
         visible={isDeleteModalVisible}
         title={`Tem certeza que deseja deletar o contato "${contactBeingDeleted?.name}" ?`}
+        isLoading={isLoadingDelete}
         confirmButtonProps={{
           label: 'Deletar',
-          onClick: () => {},
+          onClick: handleConfirmDeleteContact,
         }}
         cancelButtonProps={{
           onClick: handleChangeModalVisibility,
@@ -154,7 +156,7 @@ function Home() {
                 <Link to={`/edit/${contact.id}`}>
                   <img src={edit} alt="edit" />
                 </Link>
-                <button onClick={() => handleDeleteContact(contact)} type="button">
+                <button onClick={() => handleChangeModalVisibility(contact)} type="button">
                   <img src={trash} alt="trash" />
                 </button>
               </div>
