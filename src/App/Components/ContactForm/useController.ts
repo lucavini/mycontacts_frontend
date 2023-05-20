@@ -4,6 +4,7 @@ import useErrors from 'Shared/hooks/useErrors';
 import isEmailValid from 'Shared/utils/isEmailValid';
 import formatPhone from 'Shared/utils/formatPhone';
 
+import useSafeAsyncState from 'Shared/hooks/useSafeAsyncState';
 import CategoryService from '~Services/CategoryService';
 
 type ContactFormRef = {
@@ -21,8 +22,8 @@ function useController({ onSubmit, ref }: IProps) {
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [category, setCategory] = React.useState('');
-  const [categories, setCategories] = React.useState<models.Category[]>([]);
-  const [isLoadingCategories, setIsLoadingCategories] = React.useState(true);
+  const [categories, setCategories] = useSafeAsyncState<models.Category[]>([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useSafeAsyncState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   React.useImperativeHandle(ref, () => ({
@@ -59,7 +60,7 @@ function useController({ onSubmit, ref }: IProps) {
     }
 
     loadCategories();
-  }, []);
+  }, [setCategories, setIsLoadingCategories]);
 
   function handleNameChange({ target }: React.ChangeEvent<HTMLInputElement>) {
     setName(target.value);
