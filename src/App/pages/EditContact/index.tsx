@@ -1,8 +1,11 @@
 import React from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+
 import PageHeader from '@Components/PageHeader';
 import ContactForm from '@Components/ContactForm';
-import { useParams, useHistory } from 'react-router-dom';
 import Loader from '@Components/Loader';
+
+import useSafeAsyncAction from 'Shared/hooks/useSafeAsyncAction';
 import ContactService from '~Services/ContactService';
 import toast from '~Utils/toast';
 
@@ -15,6 +18,7 @@ function EditContact() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [contactName, setContactName] = React.useState('');
   const contactFormRef = React.useRef<ContactFormRef>({} as ContactFormRef);
+  const safeAsyncAction = useSafeAsyncAction();
 
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
@@ -22,21 +26,26 @@ function EditContact() {
   React.useEffect(() => {
     async function loadContact() {
       try {
-        const contactData: models.Contact = await ContactService.getContactById(
-          id,
-        );
-        contactFormRef.current.setFieldValues(contactData);
-        setContactName(contactData.name);
+        const contactData = await ContactService.getContactById(id);
 
-        setIsLoading(false);
+        safeAsyncAction(() => {
+          contactFormRef.current.setFieldValues(contactData);
+          setContactName(contactData.name);
+          setIsLoading(false);
+        });
       } catch (error) {
-        history.push('/');
-        toast({ type: 'danger', text: 'Erro ao buscar contato' });
+        safeAsyncAction(() => {
+          history.push('/');
+          toast({
+            type: 'danger',
+            text: 'Erro ao buscar contato',
+          });
+        });
       }
     }
 
     loadContact();
-  }, [id, history]);
+  }, [id, history, safeAsyncAction]);
 
   async function handleSubmit(formData: models.Contact) {
     try {
