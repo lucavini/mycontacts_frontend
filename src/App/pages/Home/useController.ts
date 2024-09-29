@@ -4,7 +4,6 @@ import ContactService from '~Services/ContactService';
 import toast from '~Utils/toast';
 
 export interface Controller {
-  filteredContacts: models.Contact[];
   contacts: models.Contact[];
   orderBy: string;
   searchTerm: string;
@@ -30,14 +29,6 @@ function useController(): Controller {
   const [isLoadingDelete, setIsloadingDelete] = React.useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] =
     React.useState<models.Contact | null>(null);
-
-  const filteredContacts = React.useMemo(
-    () =>
-      contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      ),
-    [contacts, searchTerm],
-  );
 
   const loadContact = React.useCallback(async () => {
     try {
@@ -107,7 +98,6 @@ function useController(): Controller {
     orderBy,
     searchTerm,
     isLoading,
-    filteredContacts,
     isDeleteModalVisible,
     contacts,
     hasError,

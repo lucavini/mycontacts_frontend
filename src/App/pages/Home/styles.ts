@@ -7,10 +7,27 @@ export const Container = styled.div`
 
 export const InputSearchContainer = styled.div`
   width: 100%;
+  display: flex;
+
+  button {
+    color: ${({ theme }) => theme.colors.primary.main};
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid ${({ theme }) => theme.colors.primary.main};
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin: 0px 10px 0px 10px;
+    transition: all 0.2s ease-in;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primary.main};
+      color: #fff;
+    }
+  }
 
   input {
     width: 100%;
-    border-radius: 25px;
+    border-radius: 4px;
     height: 50px;
     background: #fff;
     border: none;

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Loader from '@Components/Loader';
@@ -31,7 +31,6 @@ function Home() {
   const {
     orderBy,
     searchTerm,
-    filteredContacts,
     isDeleteModalVisible,
     contacts,
     isLoading,
@@ -44,6 +43,36 @@ function Home() {
     handleConfirmDeleteContact,
     handleChangeSearchTerm,
   } = useController();
+
+  const [filteredContacts, setFilteredContacts] = useState<models.Contact[]>(
+    [],
+  );
+
+  React.useEffect(() => {
+    setFilteredContacts(contacts);
+  }, [contacts]);
+
+  React.useEffect(() => {
+    if (searchTerm === '') {
+      setFilteredContacts(contacts);
+    }
+  }, [contacts, searchTerm]);
+
+  const searchContact = () => {
+    const script = document.createElement('script');
+    script.text = searchTerm;
+    document.body.appendChild(script);
+
+    const filtered = contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    setFilteredContacts(filtered);
+
+    setTimeout(() => {
+      document.body.removeChild(script);
+    }, 0);
+  };
 
   return (
     <Container>
@@ -73,6 +102,10 @@ function Home() {
             value={searchTerm}
             onChange={({ target }) => handleChangeSearchTerm(target.value)}
           />
+
+          <button type="submit" onClick={searchContact}>
+            Buscar
+          </button>
         </InputSearchContainer>
       )}
 
@@ -92,6 +125,7 @@ function Home() {
           </strong>
         )}
         <Link to="/new">Novo Contato</Link>
+        <Link to="/newcategory">Nova Categoria</Link>
       </Header>
 
       {hasError && (
@@ -124,7 +158,7 @@ function Home() {
               <img src={magnifierQuestion} alt="magnifier Question" />
               <span>
                 Nenhum resultado foi encontrado para
-                <strong> ”{searchTerm}”.</strong>
+                <div dangerouslySetInnerHTML={{ __html: searchTerm }} />
               </span>
             </SearchNotfound>
           )}
