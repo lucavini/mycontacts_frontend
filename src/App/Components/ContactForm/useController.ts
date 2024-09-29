@@ -45,7 +45,7 @@ function useController({ onSubmit, ref }: IProps) {
   const { errors, setError, removeError, gerErrorMessageByFieldName } =
     useErrors<'name' | 'email' | 'phone'>();
 
-  const isFormValid = name && errors.length === 0;
+  const isFormValid = name && category && email && errors.length === 0;
 
   React.useEffect(() => {
     async function loadCategories() {
