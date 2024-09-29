@@ -1,10 +1,11 @@
 import HttpClient from './utils/HttpClient';
+import config from './config.json';
 
 class ContactService {
   httpClient: HttpClient;
 
   constructor() {
-    this.httpClient = new HttpClient('http://localhost:3333');
+    this.httpClient = new HttpClient(config.baseURL);
   }
 
   listContacts(orderBy = 'asc') {
