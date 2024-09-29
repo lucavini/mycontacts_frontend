@@ -26,6 +26,11 @@
     "class-methods-use-this": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "no-empty": ["error", { "allowEmptyCatch": true }]
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "react/no-danger-with-children": "off",
+    "@typescript-eslint/quotes":"off",
+    "quote-props":"off",
+    "react/no-unescaped-entities":"off",
+    "react/no-danger":"off"
   }
 }
